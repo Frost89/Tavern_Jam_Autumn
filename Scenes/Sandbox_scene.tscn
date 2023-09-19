@@ -23,6 +23,14 @@ texture = ExtResource("2_5l6lw")
 position = Vector2(0.5, -0.5)
 shape = SubResource("RectangleShape2D_fatbe")
 
+[node name="ChargeBar" type="ProgressBar" parent="Proto"]
+modulate = Color(0, 0.74902, 0.85098, 1)
+offset_left = -63.0
+offset_top = -97.0
+offset_right = 65.0
+offset_bottom = -70.0
+rounded = true
+
 [node name="Platform_Ground" type="StaticBody2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Platform_Ground"]
