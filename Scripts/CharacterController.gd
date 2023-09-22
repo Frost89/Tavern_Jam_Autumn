@@ -12,6 +12,8 @@ var game_end = false
 #Referencing Instances/Nodes
 @onready var chargebar = $ChargeBar
 @onready var timer = $Timer #Researching Timer and implementing it
+@onready var sprite = $Sprite2D
+@onready var anim_player = $AnimationPlayer
 
 #CHARGE-VARS
 var charge = 99.9
@@ -39,9 +41,25 @@ func _process(delta): #Use for logical and systemic shi
 
 
 func _physics_process(delta): #Use for physics based shi e.g velocity, force, impulse, etc
-	movement(delta)
+	var horizontal_direction = Input.get_axis("Left", "Right")
+	movement(delta, horizontal_direction)
+	update_anims(horizontal_direction)
 	
+func update_anims(h_dir):
+	if h_dir != 0:
+		sprite.flip_h = (h_dir == -1)
 	
+	if is_on_floor():
+		if h_dir == 0:
+			anim_player.play("Idle")
+		else:
+			anim_player.play("Run")
+	else:
+		if velocity.y < 0:
+			anim_player.play("Jump")
+		elif velocity.y > 0:
+			anim_player.play("Fall")
+
 func update_charge():
 	charge -= drain_rate
 	chargebar.value = charge
@@ -56,12 +74,15 @@ func update_hitsim():
 		charge = 100
 		
 
-func movement(delta):
+func movement(delta, h_dir):
 	#Add gravity first
-	velocity.y += gravity * delta
+	if !is_on_floor():
+		velocity.y += gravity * delta
+		if velocity.y > 5000:
+			velocity.y = 5000
 	
 	#X-axis movement
-	velocity.x = Input.get_axis("Left", "Right") * speed
+	velocity.x = h_dir * speed
 	move_and_slide()
 	
 	#Jumping 
@@ -70,11 +91,10 @@ func movement(delta):
 	
 	
 func check_game_end():
-	if game_end == false:
+	if not game_end:
 		if charge == 0:
 			print("You're fully discharged. *windowsshutdownsound.jpg*")
 			game_end = true
-		
 		
 		if charge == 100:
 			print("You're overcharged. BOOM!")
@@ -83,5 +103,5 @@ func check_game_end():
 
 func _on_timer_timeout():
 	charge_drain = true
-	if charge_drain == true and not game_end:
+	if charge_drain and not game_end:
 		update_charge()
