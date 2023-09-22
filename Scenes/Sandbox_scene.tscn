@@ -1,10 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://emw3f4bv4lnj"]
+[gd_scene load_steps=4 format=3 uid="uid://emw3f4bv4lnj"]
 
-[ext_resource type="Script" path="res://Scripts/Movement.gd" id="1_4kr3g"]
+[ext_resource type="PackedScene" uid="uid://d10c637vwyfos" path="res://Scenes/proto.tscn" id="1_3fnmi"]
 [ext_resource type="Texture2D" uid="uid://dj3ncdy3oemj5" path="res://icon.svg" id="2_5l6lw"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fatbe"]
-size = Vector2(129, 127)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yatvs"]
 size = Vector2(1148, 54)
@@ -12,24 +9,8 @@ size = Vector2(1148, 54)
 [node name="Scene" type="Node2D"]
 position = Vector2(557, 340)
 
-[node name="Proto" type="CharacterBody2D" parent="."]
-position = Vector2(4, -83)
-script = ExtResource("1_4kr3g")
-
-[node name="Sprite2D" type="Sprite2D" parent="Proto"]
-texture = ExtResource("2_5l6lw")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Proto"]
-position = Vector2(0.5, -0.5)
-shape = SubResource("RectangleShape2D_fatbe")
-
-[node name="ChargeBar" type="ProgressBar" parent="Proto"]
-modulate = Color(0, 0.74902, 0.85098, 1)
-offset_left = -63.0
-offset_top = -97.0
-offset_right = 65.0
-offset_bottom = -70.0
-rounded = true
+[node name="Proto" parent="." instance=ExtResource("1_3fnmi")]
+position = Vector2(0, -19)
 
 [node name="Platform_Ground" type="StaticBody2D" parent="."]
 

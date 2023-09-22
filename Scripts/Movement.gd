@@ -1,26 +1,62 @@
 extends CharacterBody2D
-
 #const SPEED = 300.0
 #const JUMP_VELOCITY = -400.0
 
-@export var speed = 500 #increased speed - mango
-@export var jump_velocity = -800 #increased jump - mango
-@export var gravity = 2000 #increased gravity - mango
+#Game Manager variables
+var game_end = false
+ 
+@export var speed = 500 #increased speed - mango - bet
+@export var jump_velocity = -800 #increased jump - mango - bet
+@export var gravity = 2000 #increased gravity - mango - bet
+
+#Referencing Instances/Nodes
+@onready var chargebar = $ChargeBar
+@onready var timer = $Timer #Researching Timer and implementing it
 
 #CHARGE-VARS
-var charge = 75
-var drain_rate = 0.05
+var charge = 99.9
+@export var drain_rate = 5
 var charge_drain = false
 
 func _init():
-	print("Press F to start charge drain.")
+#	print("Press F to start charge drain.")
 	print("Press E to simulate hit.")
 #INIT
 
-var game_end = false
+
+func _ready():
+	chargebar.value = charge
+	timer.wait_time = 2.0
+	timer.start(2.0)
 
 
-func _physics_process(delta):
+func _process(delta): #Use for logical and systemic shi	
+	if Input.is_action_just_pressed("SimHit") and not game_end: #Conditions will change once attacks are implemented
+		print("You got hit.")
+		update_hitsim()
+	
+	check_game_end()
+
+
+func _physics_process(delta): #Use for physics based shi e.g velocity, force, impulse, etc
+	movement(delta)
+	
+	
+func update_charge():
+	charge -= drain_rate
+	chargebar.value = charge
+	if charge < 0:
+		charge = 0
+
+
+func update_hitsim():
+	charge += 10
+	chargebar.value = charge
+	if charge > 100:
+		charge = 100
+		
+
+func movement(delta):
 	#Add gravity first
 	velocity.y += gravity * delta
 	
@@ -31,26 +67,9 @@ func _physics_process(delta):
 	#Jumping 
 	if Input.is_action_just_pressed("Jump") and is_on_floor():
 		velocity.y = jump_velocity
-		
-	
-	#Charge/Discharge - mango
-	var chargebar = $ChargeBar
-	chargebar.value = charge
 	
 	
-	if Input.is_action_just_pressed("Drain"):
-		print("Drain Activated")
-		charge_drain = true
-	
-	if charge_drain == true:
-		if game_end == false:
-			update_charge()
-	
-	if Input.is_action_just_pressed("SimHit"):
-		print("You got hit.")
-		if game_end == false:
-			update_hitsim()
-	
+func check_game_end():
 	if game_end == false:
 		if charge == 0:
 			print("You're fully discharged. *windowsshutdownsound.jpg*")
@@ -60,18 +79,9 @@ func _physics_process(delta):
 		if charge == 100:
 			print("You're overcharged. BOOM!")
 			game_end = true
-	
-	
-	
-func update_charge():
-	charge -= drain_rate
-	if charge < 0:
-		charge = 0
 
 
-func update_hitsim():
-	charge += 10
-	if charge > 100:
-		charge = 100
-	
-	
+func _on_timer_timeout():
+	charge_drain = true
+	if charge_drain == true and not game_end:
+		update_charge()
