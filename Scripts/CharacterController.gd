@@ -5,6 +5,8 @@ extends CharacterBody2D
 #Game Manager variables
 var game_end = false
 var is_hit = false
+var jump_max = 2
+var jump_count = 0
  
 @export var speed = 500 #increased speed - mango - bet
 @export var jump_velocity = -800 #increased jump - mango - bet
@@ -114,8 +116,13 @@ func movement(delta, h_dir):
 		move_and_slide()
 	
 	#Jumping 
-	if Input.is_action_just_pressed("Jump") and is_on_floor():
+	if Input.is_action_just_pressed("Jump") and jump_count<jump_max:
 		velocity.y = jump_velocity
+		jump_count += 1
+		
+	#Reset jump_count:
+	if is_on_floor() and jump_count!=0 :
+		jump_count = 0
 	
 	
 func check_game_end():

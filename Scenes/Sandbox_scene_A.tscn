@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://emw3f4bv4lnj"]
 
-[ext_resource type="PackedScene" path="res://Scenes/proto.tscn" id="1_0cmag"]
+[ext_resource type="PackedScene" uid="uid://d10c637vwyfos" path="res://Scenes/proto.tscn" id="1_0cmag"]
 [ext_resource type="Texture2D" uid="uid://dxg55rxr4mho4" path="res://Assets/Environment/FacilityPanel_big.png" id="2_5cavg"]
 [ext_resource type="Texture2D" uid="uid://b45610ib5jdma" path="res://Assets/Environment/FacilityPlatform.png" id="3_tlpjy"]
 
