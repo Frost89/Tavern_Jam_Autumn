@@ -1,0 +1,84 @@
+[gd_scene load_steps=7 format=3 uid="uid://emw3f4bv4lnj"]
+
+[ext_resource type="PackedScene" path="res://Scenes/proto.tscn" id="1_0cmag"]
+[ext_resource type="Texture2D" uid="uid://dxg55rxr4mho4" path="res://Assets/Environment/FacilityPanel_big.png" id="2_5cavg"]
+[ext_resource type="Texture2D" uid="uid://b45610ib5jdma" path="res://Assets/Environment/FacilityPlatform.png" id="3_tlpjy"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5ubml"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rfvqr"]
+texture = ExtResource("3_tlpjy")
+texture_region_size = Vector2i(71, 86)
+3:5/0 = 0
+3:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:5/0/physics_layer_0/angular_velocity = 0.0
+4:5/0 = 0
+4:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:5/0/physics_layer_0/angular_velocity = 0.0
+5:5/0 = 0
+5:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+5:5/0/physics_layer_0/angular_velocity = 0.0
+6:5/0 = 0
+6:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+6:5/0/physics_layer_0/angular_velocity = 0.0
+4:6/0 = 0
+4:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:6/0/physics_layer_0/angular_velocity = 0.0
+5:6/0 = 0
+5:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+5:6/0/physics_layer_0/angular_velocity = 0.0
+6:6/0 = 0
+6:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+6:6/0/physics_layer_0/angular_velocity = 0.0
+1:2/size_in_atlas = Vector2i(4, 1)
+1:2/0 = 0
+1:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:2/0/physics_layer_0/angular_velocity = 0.0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-139.185, -42.3729, 138.75, -43.25, 138.75, 42.25, -139.466, 41.8117)
+0:1/0 = 0
+0:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:1/0/physics_layer_0/angular_velocity = 0.0
+5:1/0 = 0
+5:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+5:1/0/physics_layer_0/angular_velocity = 0.0
+1:1/size_in_atlas = Vector2i(4, 1)
+1:1/0 = 0
+1:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:1/0/physics_layer_0/angular_velocity = 0.0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-139.75, -39.75, 138.906, -39.6875, 138.906, 43.1523, -139.5, 42.25)
+1:3/size_in_atlas = Vector2i(4, 1)
+1:3/0 = 0
+1:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:3/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSet" id="TileSet_u6spa"]
+physics_layer_0/collision_layer = 1
+physics_layer_0/physics_material = SubResource("PhysicsMaterial_5ubml")
+sources/1 = SubResource("TileSetAtlasSource_rfvqr")
+
+[node name="Scene" type="Node2D"]
+position = Vector2(557, 340)
+
+[node name="Proto" parent="." instance=ExtResource("1_0cmag")]
+position = Vector2(5, -198)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(3806, 2284)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture_repeat = 3
+position = Vector2(10, 25)
+scale = Vector2(2, 2)
+texture = ExtResource("2_5cavg")
+centered = false
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_u6spa")
+format = 2
+layer_0/name = "ground"
+layer_0/tile_data = PackedInt32Array(458732, 65537, 1, 458749, 65537, 1, 393230, 65537, 1, 393247, 65537, 1, 393264, 65537, 1, 393281, 65537, 1, 393298, 65537, 1, 458715, 65537, 1, 393315, 65537, 1, 458699, 65537, 1, 786412, 65537, 2, 786395, 65537, 2, 786379, 65537, 2, 786429, 65537, 2, 720910, 65537, 2, 720927, 65537, 2, -1114142, 65537, 1, -983088, 65537, 3, -1310768, 65537, 2, -1638448, 65537, 1, -851998, 65537, 2, -589854, 65537, 3, -2752495, 65537, 1, -2752478, 65537, 1, -2752461, 65537, 1, 720944, 65537, 2, 720961, 65537, 2, 720978, 65537, 2, 720995, 65537, 2)
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+energy = 0.28
