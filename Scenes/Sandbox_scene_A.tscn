@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://emw3f4bv4lnj"]
+[gd_scene load_steps=9 format=3 uid="uid://emw3f4bv4lnj"]
 
 [ext_resource type="PackedScene" uid="uid://d10c637vwyfos" path="res://Scenes/proto.tscn" id="1_0cmag"]
 [ext_resource type="Texture2D" uid="uid://dxg55rxr4mho4" path="res://Assets/Environment/FacilityPanel_big.png" id="2_5cavg"]
 [ext_resource type="Texture2D" uid="uid://b45610ib5jdma" path="res://Assets/Environment/FacilityPlatform.png" id="3_tlpjy"]
-[ext_resource type="Texture2D" uid="uid://dj3ncdy3oemj5" path="res://icon.svg" id="4_34dha"]
 [ext_resource type="PackedScene" uid="uid://b0qbaosm2q0jl" path="res://Scenes/samurai_boss.tscn" id="5_cc4xp"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5ubml"]
@@ -89,7 +88,6 @@ energy = 0.28
 visible = false
 position = Vector2(1274.5, -146)
 scale = Vector2(3.50781, 3.32813)
-texture = ExtResource("4_34dha")
 
 [node name="Area2D" type="Area2D" parent="Sprite2D"]
 

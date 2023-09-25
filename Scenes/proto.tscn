@@ -8,9 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://bdio5n32fyny6" path="res://Assets/Anims/Character damage_taken _game jam-Sheet.png" id="6_dul15"]
 [ext_resource type="Texture2D" uid="uid://bi52hwar8nrgs" path="res://Assets/Anims/Character damage_taken_jump _game jam-Sheet.png" id="7_ptau0"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mf14b"]
-radius = 52.0
-height = 212.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4eif0"]
+size = Vector2(160, 224.5)
 
 [sub_resource type="Animation" id="Animation_qcq0u"]
 resource_name = "Fall"
@@ -290,7 +289,7 @@ tracks/4/path = NodePath(".:is_hit")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0.3),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
@@ -507,6 +506,9 @@ height = 144.0
 [node name="Proto" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 5
+collision_priority = 100.0
+floor_stop_on_slope = false
+floor_block_on_wall = false
 script = ExtResource("1_vkemj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -514,8 +516,8 @@ texture = ExtResource("2_4olxs")
 hframes = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 29)
-shape = SubResource("CapsuleShape2D_mf14b")
+position = Vector2(-15, 16.75)
+shape = SubResource("RectangleShape2D_4eif0")
 
 [node name="ChargeBar" type="ProgressBar" parent="."]
 modulate = Color(0, 0.74902, 0.85098, 1)
@@ -534,6 +536,7 @@ zoom = Vector2(0.5, 0.5)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
+playback_process_mode = 0
 libraries = {
 "": SubResource("AnimationLibrary_pu7cp")
 }
@@ -543,7 +546,7 @@ process_callback = 0
 
 [node name="HitArea" type="Area2D" parent="."]
 collision_layer = 2
-collision_mask = 4
+collision_mask = 5
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]

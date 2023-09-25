@@ -9,7 +9,7 @@ var jump_count = 0
 @export var is_hit = false
 @export var is_attacking = false
 @export var can_damage = false
-@export var damage: int = 15 
+@export var damage: int = 5
 
 
 @export var speed = 750 #increased speed - mango - bet
@@ -18,7 +18,7 @@ var jump_count = 0
 
 #Referencing Instances/Nodes
 @onready var chargebar = $ChargeBar
-@onready var timer = $Timer #Researching Timer and implementing it
+@onready var timer = $Timer 
 @onready var sprite = $Sprite2D
 @onready var anim_player = $AnimationPlayer
 @onready var combat_timer = $CombatTimer
@@ -47,9 +47,6 @@ func _ready():
 func _process(delta): #Use for logical and systemic shi	
 #	if Input.is_action_just_pressed("SimHit") and not game_end: #Conditions will change once attacks are implemented
 #		take_damage()
-	if Input.is_action_just_pressed("Punch") and not game_end and combat_timer.is_stopped():
-		attack()
-	
 	check_game_end()
 
 
@@ -75,24 +72,31 @@ func debug():
 
 func _physics_process(delta): #Use for physics based shi e.g velocity, force, impulse, etc
 	var horizontal_direction = Input.get_axis("Left", "Right")
+	if Input.is_action_just_pressed("Punch") and not game_end:
+		attack()
 	movement(delta, horizontal_direction)
 	update_anims(horizontal_direction)
+#	print(anim_player.is_playing())
 	if  !anim_player.is_playing():
-		anim_player.play("Idle")
+#		global_position += Vector2(100*horizontal_direction, 0)
+		anim_player.queue("Punch")
+		anim_player.clear_queue()
 	
 	
 func update_anims(h_dir):
 	if h_dir != 0:
 		sprite.flip_h = (h_dir == -1)
-		hitbox.scale.x = abs(hitbox.scale.x) * h_dir
+		hitbox.position = Vector2.ZERO if h_dir == 1 else Vector2(-300, 0)
 	
 	if is_hit and !combat_timer.is_stopped():
 		if velocity.y != 0:
-			anim_player.play("OnAirDamage")
-			print("OnAirDamage")
+			if anim_player.is_playing():
+				anim_player.play("OnAirDamage")
+				print("OnAirDamage")
 		else:
-			anim_player.play("GroundDamage")
-			print("GroundDamage")
+			if anim_player.is_playing():
+				anim_player.play("GroundDamage")
+				print("GroundDamage")
 		is_hit = false
 	
 	if !is_attacking and combat_timer.is_stopped():
@@ -132,8 +136,8 @@ func movement(delta, h_dir):
 	
 	#X-axis movement
 	velocity.x = h_dir * speed
-	if !is_attacking:
-		move_and_slide()
+#	if !is_attacking:
+	move_and_slide()
 	
 	#Reset jump_count:
 	if is_on_floor() and jump_count!=0 :

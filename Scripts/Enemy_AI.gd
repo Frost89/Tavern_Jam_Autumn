@@ -7,15 +7,17 @@ extends CharacterBody2D
 @onready var attack_range = $AttackRange/CollisionShape2D
 @onready var hitbox = $HitBox/CollisionShape2D
 @onready var timer = $CombatTimer
+@onready var tp_timer = $TeleportTimer
 
 var player_ref
 @onready var Player = get_tree().get_root().find_child("Proto", true, false)
 var player_in_range = false
 var direction = 0
+var can_tp = true
 
 @export var can_attack = false
 
-@export var attack_interval = 2.0
+@export var attack_interval = 1.5
 @export var max_speed = 500
 @export var speed = 0 #increased speed - mango - bet
 @export var jump_velocity = 1000 #increased jump - mango - bet
@@ -74,8 +76,8 @@ func handle_states():
 			speed = 0
 		states.CHASE:
 			sprite.modulate = Color.WHITE
-			speed = max_speed
-			pass
+			if tp_timer.is_stopped():
+				teleport()
 		states.ATTACK:
 			sprite.modulate = Color.WHITE
 			if can_attack:
@@ -94,6 +96,13 @@ func handle_states():
 func take_damage():
 	current_state = states.HURT
 
+
+func teleport():
+	if player_ref and can_tp:
+		global_position = Player.global_position + Vector2(300 * -direction, -20)
+		can_tp = false
+	tp_timer.wait_time = 3
+	tp_timer.start()
 
 func _on_player_detection_area_body_entered(body):
 	if body == Player:
@@ -127,3 +136,6 @@ func _on_hit_box_body_entered(body):
 func _on_combat_timer_timeout():
 	can_attack = player_in_range
 
+
+func _on_teleport_timer_timeout():
+	can_tp = true

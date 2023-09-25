@@ -1,10 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://b0qbaosm2q0jl"]
+[gd_scene load_steps=13 format=3 uid="uid://c4wypytg5j0s4"]
 
-[ext_resource type="Texture2D" uid="uid://dw23qqxgs8yb2" path="res://Assets/Samurai_Idle.png" id="1_n7jbp"]
-[ext_resource type="Script" path="res://Scripts/Enemy_AI.gd" id="1_okyjn"]
-[ext_resource type="Texture2D" uid="uid://bxsy2o0o5o8fi" path="res://Assets/samurai attack 1.png" id="2_m0i8j"]
-[ext_resource type="Script" path="res://Scripts/Damageable.gd" id="4_ymksd"]
-[ext_resource type="Script" path="res://Scripts/Combat/TeleportTimer.gd" id="5_r8vby"]
+[ext_resource type="Script" path="res://Scripts/Enemy_AI.gd" id="1_w0kae"]
+[ext_resource type="Texture2D" uid="uid://dw23qqxgs8yb2" path="res://Assets/Samurai_Idle.png" id="2_am5fg"]
+[ext_resource type="Texture2D" uid="uid://bxsy2o0o5o8fi" path="res://Assets/samurai attack 1.png" id="3_ch1su"]
+[ext_resource type="Script" path="res://Scripts/Damageable.gd" id="4_6sp8c"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i7dkx"]
 radius = 109.0
@@ -24,7 +23,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("2_m0i8j")]
+"values": [ExtResource("3_ch1su")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -101,7 +100,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("1_n7jbp")]
+"values": [ExtResource("2_am5fg")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -152,7 +151,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("1_n7jbp")]
+"values": [ExtResource("2_am5fg")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -207,14 +206,14 @@ size = Vector2(684, 283)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1oqip"]
 size = Vector2(588, 350)
 
-[node name="SamuraiBoss" type="CharacterBody2D"]
+[node name="BaseEnemy" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 3
 collision_priority = 2.0
-script = ExtResource("1_okyjn")
+script = ExtResource("1_w0kae")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_n7jbp")
+texture = ExtResource("2_am5fg")
 hframes = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -257,13 +256,7 @@ shape = SubResource("RectangleShape2D_1oqip")
 [node name="CombatTimer" type="Timer" parent="."]
 
 [node name="Damageable" type="Node" parent="."]
-script = ExtResource("4_ymksd")
-
-[node name="TeleportTimer" type="Timer" parent="."]
-process_callback = 0
-one_shot = true
-autostart = true
-script = ExtResource("5_r8vby")
+script = ExtResource("4_6sp8c")
 
 [connection signal="body_entered" from="PlayerDetectionArea" to="." method="_on_player_detection_area_body_entered"]
 [connection signal="body_exited" from="PlayerDetectionArea" to="." method="_on_player_detection_area_body_exited"]
@@ -271,5 +264,3 @@ script = ExtResource("5_r8vby")
 [connection signal="body_entered" from="AttackRange" to="." method="_on_attack_range_body_entered"]
 [connection signal="body_exited" from="AttackRange" to="." method="_on_attack_range_body_exited"]
 [connection signal="timeout" from="CombatTimer" to="." method="_on_combat_timer_timeout"]
-[connection signal="timeout" from="TeleportTimer" to="." method="_on_teleport_timer_timeout"]
-[connection signal="timeout" from="TeleportTimer" to="TeleportTimer" method="_on_timeout"]
