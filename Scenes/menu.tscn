@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7628tejowpas"]
+
+[ext_resource type="Script" path="res://Menu.gd" id="1_b55pk"]
+[ext_resource type="Texture2D" uid="uid://dxg55rxr4mho4" path="res://Assets/Environment/FacilityPanel_big.png" id="2_1dje0"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_b55pk")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -39.5
+offset_top = -68.0
+offset_right = 39.5
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Start" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "START"
+
+[node name="Instructions" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "INSTRUCTIONS"
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "QUIT"
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+texture_repeat = 3
+position = Vector2(-132, -77)
+scale = Vector2(2, 2)
+texture = ExtResource("2_1dje0")
+centered = false
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="ParallaxBackground"]
+energy = 0.28
+
+[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/Instructions" to="." method="_on_instructions_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]

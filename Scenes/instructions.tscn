@@ -1,0 +1,103 @@
+[gd_scene load_steps=8 format=3 uid="uid://1jq2xdm7vi50"]
+
+[ext_resource type="Texture2D" uid="uid://cmekxxoqorg58" path="res://Assets/Instructions/E TO PUNCH.png" id="1_4o4uy"]
+[ext_resource type="Script" path="res://Scenes/button.gd" id="1_epgsb"]
+[ext_resource type="Texture2D" uid="uid://c818y37y60a22" path="res://Assets/Instructions/SPACE TO JUMP.png" id="2_moi0n"]
+[ext_resource type="Texture2D" uid="uid://dj34mk3ro33cx" path="res://Assets/Instructions/WASD TO MOVE.png" id="3_2mvmf"]
+[ext_resource type="Texture2D" uid="uid://biqay5nhmxuv8" path="res://Assets/Instructions/chargerbar_meter.png" id="5_f460e"]
+[ext_resource type="Texture2D" uid="uid://ceu0gudgy8geo" path="res://Assets/Instructions/chargerbar_over.png" id="6_bj2fo"]
+[ext_resource type="Texture2D" uid="uid://dxg55rxr4mho4" path="res://Assets/Environment/FacilityPanel_big.png" id="7_sb1vr"]
+
+[node name="instructions" type="Node2D"]
+
+[node name="button" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_epgsb")
+
+[node name="back" type="Button" parent="button"]
+layout_mode = 0
+offset_left = 566.0
+offset_top = 577.0
+offset_right = 616.0
+offset_bottom = 608.0
+text = "BACK"
+
+[node name="EToPunch" type="Sprite2D" parent="button"]
+position = Vector2(621.911, 254)
+texture = ExtResource("1_4o4uy")
+
+[node name="SpaceToJump" type="Sprite2D" parent="button"]
+position = Vector2(641.911, 195)
+texture = ExtResource("2_moi0n")
+
+[node name="WasdToMove" type="Sprite2D" parent="button"]
+position = Vector2(567.911, 128)
+texture = ExtResource("3_2mvmf")
+
+[node name="ChargerbarMeter" type="Sprite2D" parent="."]
+position = Vector2(773, 500)
+scale = Vector2(1.25949, 1.25949)
+texture = ExtResource("5_f460e")
+
+[node name="ChargerbarOver" type="Sprite2D" parent="."]
+position = Vector2(406, 497)
+scale = Vector2(1.24684, 1.24684)
+texture = ExtResource("6_bj2fo")
+
+[node name="TextEdit" type="TextEdit" parent="."]
+offset_left = 434.911
+offset_top = 306.0
+offset_right = 756.911
+offset_bottom = 351.0
+text = "PAY ATTENTION TO YOUR CHARGE BAR!"
+virtual_keyboard_enabled = false
+
+[node name="TextEdit5" type="TextEdit" parent="."]
+offset_left = 505.0
+offset_top = 436.0
+offset_right = 676.0
+offset_bottom = 481.0
+text = "DAMAGE = CHARGE"
+virtual_keyboard_enabled = false
+
+[node name="TextEdit4" type="TextEdit" parent="."]
+offset_left = 339.0
+offset_top = 361.0
+offset_right = 837.0
+offset_bottom = 425.0
+text = "YOUR CHARGE WILL DECREASE EVERY SECOND.
+TO NOT SHUTDOWN DON'T LET YOUR CHARGE BAR RUN OUT."
+virtual_keyboard_enabled = false
+
+[node name="TextEdit2" type="TextEdit" parent="."]
+offset_left = 678.0
+offset_top = 521.0
+offset_right = 886.0
+offset_bottom = 556.0
+text = "OVERCHARGED = BOOM!"
+virtual_keyboard_enabled = false
+
+[node name="TextEdit3" type="TextEdit" parent="."]
+offset_left = 289.0
+offset_top = 517.0
+offset_right = 524.0
+offset_bottom = 552.0
+text = "NO CHARGE = SHUTDOWN :("
+virtual_keyboard_enabled = false
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+texture_repeat = 3
+position = Vector2(-132, -77)
+scale = Vector2(2, 2)
+texture = ExtResource("7_sb1vr")
+centered = false
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="ParallaxBackground"]
+energy = 0.28
+
+[connection signal="pressed" from="button/back" to="button" method="_on_back_pressed"]

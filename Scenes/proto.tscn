@@ -8,8 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://bdio5n32fyny6" path="res://Assets/Anims/Character damage_taken _game jam-Sheet.png" id="6_dul15"]
 [ext_resource type="Texture2D" uid="uid://bi52hwar8nrgs" path="res://Assets/Anims/Character damage_taken_jump _game jam-Sheet.png" id="7_ptau0"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4eif0"]
-size = Vector2(160, 224.5)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6gsoi"]
+radius = 56.0
+height = 228.0
 
 [sub_resource type="Animation" id="Animation_qcq0u"]
 resource_name = "Fall"
@@ -516,8 +517,8 @@ texture = ExtResource("2_4olxs")
 hframes = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-15, 16.75)
-shape = SubResource("RectangleShape2D_4eif0")
+position = Vector2(-6, 15)
+shape = SubResource("CapsuleShape2D_6gsoi")
 
 [node name="ChargeBar" type="ProgressBar" parent="."]
 modulate = Color(0, 0.74902, 0.85098, 1)

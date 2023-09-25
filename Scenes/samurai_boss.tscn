@@ -7,8 +7,8 @@
 [ext_resource type="Script" path="res://Scripts/Combat/TeleportTimer.gd" id="5_r8vby"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i7dkx"]
-radius = 109.0
-height = 348.0
+radius = 56.0
+height = 322.0
 
 [sub_resource type="Animation" id="Animation_6r0vk"]
 resource_name = "Attack1"
@@ -199,7 +199,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_upb1t"]
-size = Vector2(3474, 997.25)
+size = Vector2(1763, 1627)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bwj6g"]
 size = Vector2(684, 283)
@@ -218,6 +218,7 @@ texture = ExtResource("1_n7jbp")
 hframes = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-28, 12)
 shape = SubResource("CapsuleShape2D_i7dkx")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -232,7 +233,7 @@ collision_mask = 2
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea"]
-position = Vector2(2, -393.375)
+position = Vector2(-26.5, -78.5)
 shape = SubResource("RectangleShape2D_upb1t")
 
 [node name="HitBox" type="Area2D" parent="."]

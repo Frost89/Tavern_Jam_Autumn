@@ -6,6 +6,7 @@ extends CharacterBody2D
 var game_end = false
 var jump_max = 2
 var jump_count = 0
+var timer_menu = 0 #buffer before quit to menu
 @export var is_hit = false
 @export var is_attacking = false
 @export var can_damage = false
@@ -13,7 +14,7 @@ var jump_count = 0
 
 
 @export var speed = 750 #increased speed - mango - bet
-@export var jump_velocity = 1500 #increased jump - mango - bet
+@export var jump_velocity = 1200 #increased jump - mango - bet
 @export var gravity = 2000 #increased gravity - mango - bet
 
 #Referencing Instances/Nodes
@@ -155,10 +156,17 @@ func check_game_end():
 		if charge == 0:
 			print("You're fully discharged. *windowsshutdownsound.jpg*")
 			game_end = true
+			timer_menu +=1
 		
 		if charge == 100:
 			print("You're overcharged. BOOM!")
 			game_end = true
+			timer_menu +=1
+			
+	if timer_menu >0 : #timer for quit to menu
+		timer_menu +=1
+	if timer_menu >120 : #quit to menu
+		get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 
 
 func _on_timer_timeout():
