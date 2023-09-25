@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://d10c637vwyfos"]
+[gd_scene load_steps=19 format=3 uid="uid://d10c637vwyfos"]
 
 [ext_resource type="Script" path="res://Scripts/CharacterController.gd" id="1_vkemj"]
 [ext_resource type="Texture2D" uid="uid://c04tco7gia88q" path="res://Assets/Anims/Character Idle _game jam-Sheet.png" id="2_4olxs"]
@@ -8,8 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://bdio5n32fyny6" path="res://Assets/Anims/Character damage_taken _game jam-Sheet.png" id="6_dul15"]
 [ext_resource type="Texture2D" uid="uid://bi52hwar8nrgs" path="res://Assets/Anims/Character damage_taken_jump _game jam-Sheet.png" id="7_ptau0"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ea5cp"]
-size = Vector2(198, 232)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mf14b"]
+radius = 52.0
+height = 212.0
 
 [sub_resource type="Animation" id="Animation_qcq0u"]
 resource_name = "Fall"
@@ -113,6 +114,18 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [0, 1, 2]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:is_hit")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_xno2e"]
@@ -270,6 +283,18 @@ tracks/3/keys = {
 "update": 1,
 "values": [0, 1, 2]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:is_hit")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_pwyyi"]
 resource_name = "Punch"
@@ -321,6 +346,42 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:is_attacking")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.7),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:can_damage")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("HitArea:monitoring")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
 }
 
 [sub_resource type="Animation" id="Animation_vikdd"]
@@ -439,7 +500,13 @@ _data = {
 "Run": SubResource("Animation_xdal3")
 }
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uf8ub"]
+radius = 62.0
+height = 144.0
+
 [node name="Proto" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_vkemj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -447,8 +514,8 @@ texture = ExtResource("2_4olxs")
 hframes = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2, 12)
-shape = SubResource("RectangleShape2D_ea5cp")
+position = Vector2(0, 29)
+shape = SubResource("CapsuleShape2D_mf14b")
 
 [node name="ChargeBar" type="ProgressBar" parent="."]
 modulate = Color(0, 0.74902, 0.85098, 1)
@@ -463,7 +530,7 @@ metadata/_edit_use_anchors_ = true
 process_callback = 0
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.8, 0.8)
+zoom = Vector2(0.5, 0.5)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
@@ -472,5 +539,16 @@ libraries = {
 }
 
 [node name="CombatTimer" type="Timer" parent="."]
+process_callback = 0
+
+[node name="HitArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]
+position = Vector2(137, 3)
+shape = SubResource("CapsuleShape2D_uf8ub")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="HitArea" to="." method="_on_hit_area_body_entered"]

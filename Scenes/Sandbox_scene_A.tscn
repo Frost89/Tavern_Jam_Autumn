@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://emw3f4bv4lnj"]
+[gd_scene load_steps=10 format=3 uid="uid://emw3f4bv4lnj"]
 
 [ext_resource type="PackedScene" uid="uid://d10c637vwyfos" path="res://Scenes/proto.tscn" id="1_0cmag"]
 [ext_resource type="Texture2D" uid="uid://dxg55rxr4mho4" path="res://Assets/Environment/FacilityPanel_big.png" id="2_5cavg"]
 [ext_resource type="Texture2D" uid="uid://b45610ib5jdma" path="res://Assets/Environment/FacilityPlatform.png" id="3_tlpjy"]
+[ext_resource type="Texture2D" uid="uid://dj3ncdy3oemj5" path="res://icon.svg" id="4_34dha"]
+[ext_resource type="PackedScene" uid="uid://b0qbaosm2q0jl" path="res://Scenes/samurai_boss.tscn" id="5_cc4xp"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5ubml"]
 
@@ -56,11 +58,11 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/physics_material = SubResource("PhysicsMaterial_5ubml")
 sources/1 = SubResource("TileSetAtlasSource_rfvqr")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1y0si"]
+size = Vector2(127.715, 128)
+
 [node name="Scene" type="Node2D"]
 position = Vector2(557, 340)
-
-[node name="Proto" parent="." instance=ExtResource("1_0cmag")]
-position = Vector2(5, -198)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -82,3 +84,21 @@ layer_0/tile_data = PackedInt32Array(458732, 65537, 1, 458749, 65537, 1, 393230,
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
 energy = 0.28
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(1274.5, -146)
+scale = Vector2(3.50781, 3.32813)
+texture = ExtResource("4_34dha")
+
+[node name="Area2D" type="Area2D" parent="Sprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
+position = Vector2(-0.142578, -0.300468)
+shape = SubResource("RectangleShape2D_1y0si")
+
+[node name="SamuraiBoss" parent="." instance=ExtResource("5_cc4xp")]
+position = Vector2(1142, -108)
+
+[node name="Proto" parent="." instance=ExtResource("1_0cmag")]
+position = Vector2(-110, -75)
